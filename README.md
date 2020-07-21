@@ -1,9 +1,3 @@
-## TODO
-- Implement focused window title indication with i3blocks (try interval=persist)
-- Make custom hooks install automatically
-- Find a way to install all necessary packages quickly
-- ...
-
 ## Links
 - [Font Awesome cheatsheet](https://fontawesome.com/cheatsheet)
 - [Unicode characters supporded by DejaVu font](https://www.fileformat.info/info/unicode/font/dejavu_sans/list.htm)
