@@ -1,0 +1,72 @@
+# Global properties
+command=/home/vasily/.config/i3blocks/$BLOCK_NAME
+separator_block_width=15
+markup=none
+
+#[window title]
+#command=xprop -id $(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}') | awk '/_NET_WM_NAME/{$1=$2="";print}' | cut -d'"' -f2 
+#interval=1
+#color=#A6D1FA
+#min_width=1366
+#align=center
+
+# Volume indicator
+[volume]
+instance=Master
+interval=once
+signal=10
+separator=false
+
+# Backlight
+[backlight]
+label=
+command=brightnessctl | grep -oP "\d+%"
+interval=once
+signal=11
+
+# Layout
+[layout]
+interval=1
+
+# Disk usage
+[disk]
+label=
+#label= 
+#instance=/mnt/data
+interval=30
+
+# CPU usage
+[cpu_usage]
+label=⚙
+#label=
+interval=10
+min_width=U 100%
+separator=false
+
+# Temperature
+[temperature]
+label=
+interval=10
+
+# Network interface monitoring
+[iface]
+instance=enp3s0
+label=
+interval=10
+
+[wifi]
+label=
+#label=
+instance=wlp5s0
+interval=10
+
+# Battery indicator
+[battery]
+#instance=
+interval=30
+
+# Date Time
+[time]
+command=date '+%Y-%m-%d %H:%M'
+interval=5
+

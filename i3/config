@@ -1,0 +1,190 @@
+####################
+##   Appearance   ##
+####################
+
+# Font
+font pango:DejaVu Sans 12
+
+# Remove titlebar
+new_window pixel 4
+
+# Background
+exec_always --no-startup-id "xsetroot -solid '#282828'"
+
+# Bar colors
+bar {
+  status_command i3blocks
+  font pango:FontAwesome 12
+  colors {
+    background #282828
+    statusline #ebdbb2
+    separator  #504945
+    # Class	            border  backgr  text
+    focused_workspace   #282828 #282828 #689d6a
+    active_workspace    #282828 #282828 #665c54
+    inactive_workspace  #282828 #282828 #665c54
+    urgent_workspace    #282828 #282828 #cc241d
+    }
+}
+
+# Windows colors
+# class                 border  backgr. text    indicator child_border
+client.focused          #689d6a #689d6a #ebdbb2 #8ec07c   #689d6a
+client.focused_inactive #504945 #3c3836 #928374 #2f343f   #3c3836
+client.unfocused        #504945 #3c3836 #928374 #2f343f   #3c3836
+client.urgent           #cc241d #cc241d #282828 #cc241d   #cc241d
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+client.background       #a89984
+
+
+
+#################
+##   Windows   ##
+#################
+
+# Modifier key
+set $mod Mod4
+
+# floating toggle
+bindcode $mod+Shift+65 floating toggle
+
+# Use Mouse+$mod to drag floating window
+floating_modifier $mod
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Change focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move focused window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Split in horizontal orientation
+bindsym $mod+h split h
+
+# Split in vertical orientation
+bindsym $mod+v split v
+
+# Change container layout (stacked, tabbed, toggle split)
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle split
+
+
+
+####################
+##   Workspaces   ##
+####################
+
+# Names of default workspaces
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+
+
+##################
+##   Bindings   ##
+##################
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# Exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# Start a terminal
+bindsym $mod+Return exec --no-startup-id urxvt
+# Start firefox
+bindsym $mod+w exec --no-startup-id firefox
+# Start tg
+bindsym $mod+g exec --no-startup-id telegram-desktop
+# Start dmenu
+bindsym $mod+d exec --no-startup-id "dmenu_run -b -nf '#689d6a' -nb '#282828' -sf '#282828' -sb '#689d6a' -fn 'Hack'"
+# Suspend
+bindsym $mod+l exec --no-startup-id systemctl suspend
+
+# Backlight
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s +50 && pkill -RTMIN+11 i3blocks
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 50- && pkill -RTMIN+11 i3blocks
+
+# Sound
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 5%+ && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 5%- && pkill -RTMIN+10 i3blocks
+bindsym XF86AudioMute exec --no-startup-id amixer set Master toggle && pkill -RTMIN+10 i3blocks
+
+# Scrot screen capture
+bindsym --release $mod+Print exec --no-startup-id scrot -s '%Y-%m-%d-%T_$wx$h.png' -e 'mv $f ~/Screenshots/'
+bindsym $mod+Control+Print exec --no-startup-id scrot '%Y-%m-%d-%T_$wx$h.png' -e 'mv $f ~/Screenshots/'
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+n move scratchpad
+# Show scratchpad window
+bindsym $mod+n scratchpad show
+
+
+
+###############
+##   Modes   ##
+###############
+
+# Dock mode toggle
+set $mode_dock dock station mode: [u]p | [d]own
+bindsym $mod+m mode "$mode_dock"
+mode "$mode_dock" {
+  bindsym u exec --no-startup-id "~/.config/i3/docker --on", mode "default"
+  bindsym d exec --no-startup-id "~/.config/i3/docker --off", mode "default"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+# Resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
+mode "resize" {
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+

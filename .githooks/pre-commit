@@ -1,0 +1,8 @@
+#!/bin/bash
+
+LAST_COM=`git log -1 --format="%at" | xargs -I{} date -d @{} +%Y-%m-%d`
+DATE=`date +"%Y-%m-%d"`
+if [ "$LAST_COM" == "$DATE" ]; then
+  echo -e "\e[01;31mYou have already committed today. Slow down, fuckboy"
+  exit 1
+fi

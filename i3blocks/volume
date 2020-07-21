@@ -1,0 +1,40 @@
+#!/usr/bin/perl
+# -*- coding: utf-8 -*-
+
+use strict;
+use warnings;
+use utf8;
+
+my $icon = "\x{f6a9}";
+my $vol;
+my $state;
+my $volint;
+my $psymbol = '%';
+
+open (VOL, "amixer get Master | grep 'Mono:' |") or die;
+$vol = <VOL>;
+close(VOL);
+
+if ($vol !~ /\[(\d+)%\].*\[(\w+)\]$/) {
+  die;
+}
+$volint = $1;
+$state = $2;
+
+if ($state =~ "off") {
+  $volint="\x{2718}";
+  $icon="\x{f026}";
+  $psymbol='';
+} else {
+  if ($volint < 55) {
+    $icon = "\x{f026}"; 
+  } elsif ($volint < 80) {
+    $icon = "\x{f027}";
+  } else {
+    $icon = "\x{f028}";
+  }
+}
+
+print "$icon $volint$psymbol\n";
+
+exit(0);

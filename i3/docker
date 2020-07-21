@@ -1,0 +1,19 @@
+#!/bin/bash
+
+case $1 in
+--on)
+  xrandr --output HDMI-1 --auto --right-of eDP-1
+  sudo /sbin/ifup enp3s0
+  setxkbmap -layout us,ru -model pc105 -option grp:win_space_toggle
+  ;;
+
+--off)
+  xrandr --output HDMI-1 --off
+  sudo /sbin/ifdown enp3s0 
+  ;;
+  
+*) 
+  echo "--on or --off"
+  ;;
+esac
+

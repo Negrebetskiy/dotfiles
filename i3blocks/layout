@@ -1,0 +1,12 @@
+#!/bin/bash
+case $(xset -q|grep LED| awk '{ print $10 }') in
+0000000[01])
+  echo -e "\u2328 EN"
+  ;;
+0000100[01])
+  echo -e "\u2328 RU"
+  ;;
+*)
+  echo -e "\u2328 wtf"
+  ;;
+esac

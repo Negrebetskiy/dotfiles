@@ -1,0 +1,48 @@
+#!/bin/bash
+
+dir=`pwd`
+CONFIG="i3 i3blocks"
+TILDA=".Xresources .xinitrc .bashrc .vimrc .vim .icons"
+
+case $1 in
+--relink|-rl)
+  # remove existing files and create links
+  for f in $CONFIG
+  do
+    [ -e ~/.config/$f ] && rm -r ~/.config/$f
+    ln -s $dir/$f ~/.config/$f
+  done 
+  for f in $TILDA
+  do
+    [ -e ~/$f ] && rm -r ~/$f
+    ln -s $dir/$f ~/$f
+  done
+  ;;
+
+--clean|-c)
+  # remove existing files
+  for f in $CONFIG
+  do
+    [ -e ~/.config/$f ] && rm -r ~/.config/$f
+  done
+  for f in $TILDA
+  do
+    [ -e ~/$f ] && rm -r ~/$f
+  done
+  ;;
+
+--third|-th)
+  [ ! -d "~/.urxvt/ext" ] && mkdir -p ~/.urxvt/ext 
+  wget https://raw.githubusercontent.com/majutsushi/urxvt-font-size/master/font-size -P ~/.urxvt/ext
+  ;;
+   
+*)
+  echo -e "$0 usage:"
+  echo -e "\t $0 --relink, -rl    remove existing dotfiles and create links"
+  echo -e "\t $0 --third, -th     install additional scripts"
+  echo -e "\t $0 --clean, -c      remove existing dotfiles"
+  echo -e ""
+  ;;
+
+esac
+
